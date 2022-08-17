@@ -1,4 +1,5 @@
 from uuid import uuid4, UUID
+from mf_core.metrics_history import MetricsHistory
 
 
 class Hive:
@@ -11,6 +12,7 @@ class Hive:
         self.__last_temperature = 0.0
         self.__last_sound_level = 0.0
         self.__last_weight = 0.0
+        self.__metrics_history = MetricsHistory()
 
     @property
     def uuid(self) -> UUID:
@@ -39,3 +41,21 @@ class Hive:
     @last_weight.setter
     def last_weight(self, value: float = 0.0) -> None:
         self.__last_weight = value
+
+    @property
+    def metrics_history(self) -> MetricsHistory:
+        return self.__metrics_history
+
+    def insert_data(self, temperature: float, weight: float, sound_level: float) -> None:
+        """
+        Insert new data into hive object
+
+        :param temperature: Temperature
+        :param sound_level: Sound level
+        :param weight: Weight
+        :return: Nothing
+        """
+        self.__metrics_history.add_data(self.__last_temperature, self.__last_weight, self.__last_sound_level)
+        self.__last_temperature = temperature
+        self.__last_sound_level = sound_level
+        self.__last_weight = weight
