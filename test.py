@@ -1,3 +1,4 @@
+import time
 import unittest
 from uuid import uuid4
 from mf_core import Hive
@@ -58,3 +59,26 @@ class TestMetricsFaker(unittest.TestCase):
         self.assertEqual(hive.last_temperature, 4.0)
         self.assertEqual(hive.last_weight, 5.0)
         self.assertEqual(hive.last_sound_level, 6.0)
+
+    def test_hive_metrics_history_get_lines_between(self):
+        hive = Hive()
+        timestamp_start = int(time.time())
+        hive.insert_data(1.0, 1.0, 1.0)
+        hive.insert_data(1.0, 1.0, 1.0)
+        hive.insert_data(1.0, 1.0, 1.0)
+        self.assertEqual(len(hive.metrics_history.get_lines_between(timestamp_start)), 3)
+        time.sleep(3)
+        hive.insert_data(1.0, 1.0, 1.0)
+        hive.insert_data(1.0, 1.0, 1.0)
+        hive.insert_data(1.0, 1.0, 1.0)
+        hive.insert_data(1.0, 1.0, 1.0)
+        hive.insert_data(1.0, 1.0, 1.0)
+        hive.insert_data(1.0, 1.0, 1.0)
+        self.assertEqual(len(hive.metrics_history.get_lines_between(timestamp_start + 2)), 6)
+        timestamp_end = int(time.time())
+        time.sleep(2)
+        hive.insert_data(1.0, 1.0, 1.0)
+        hive.insert_data(1.0, 1.0, 1.0)
+        hive.insert_data(1.0, 1.0, 1.0)
+        self.assertEqual(len(hive.metrics_history.get_lines_between(timestamp_start + 2, timestamp_end)), 6)
+        self.assertEqual(len(hive.metrics_history.get_lines_between(timestamp_start)), 12)

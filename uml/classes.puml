@@ -1,0 +1,103 @@
+@startuml
+!theme mars
+
+class MonitoredObject {
+    -uuid: UUID
+    -last_temperature: Float
+    -metrics_history: MetricsHistory
+}
+
+class Hive {
+    -last_weight: Float
+    -last_sound_level: Float
+    insert_data(Float, Float, Float): void
+}
+
+Hive <-- MonitoredObject
+
+abstract MetricsHistory {
+    add_data(...datas) : void
+    get_lines_between(Int, Int = 0)
+}
+
+class list
+
+MetricsHistory <-- list
+HiveCollection <-- list
+StationCollection <-- list
+
+class HiveMetricsHistory {
+    add_data(Float, Float, Float)
+}
+
+HiveMetricsHistory <-- MetricsHistory
+Hive *-- HiveMetricsHistory
+
+class StationMetricsHistory {
+    add_data(Float, Float, Float, Float, Float)
+}
+
+StationMetricsHistory <-- MetricsHistory
+Station *-- StationMetricsHistory
+
+class MetricsHistoryLine {
+    -timestamp: Int
+    -temperature: Float
+}
+
+class HiveMetricsHistoryLine {
+    -weight: Float
+    -sound_level: Float
+    __str__() : String
+}
+
+HiveMetricsHistoryLine <-- MetricsHistoryLine
+HiveMetricsHistory *-- HiveMetricsHistoryLine
+
+class StationMetricsHistoryLine {
+    -wind: Float
+    -sun: Float
+    -rain: Float
+    -battery_status: Float
+    __str__() : String
+}
+
+StationMetricsHistoryLine <-- MetricsHistoryLine
+StationMetricsHistory *-- StationMetricsHistoryLine
+
+class Station {
+    -last_sun: Float
+    -last_battery_state: Float
+    -last_rain: Float
+    -last_wind: Float
+    -latitude: Float
+    -longitude: Float
+    create_hive()
+    collect_data()
+}
+
+Station <-- MonitoredObject
+
+class HiveCollection {
+    create_hive() : Hive
+    collect_data() : list
+}
+
+HiveCollection *-- Hive
+Station *-- HiveCollection
+
+class StationCollection {
+    collect_data() : list
+    create_station() : Station
+}
+StationCollection *-- Station
+
+class MetricsFaker {
+    run()
+}
+MetricsFaker *-- StationCollection
+
+class Threading
+Station <-- Threading
+
+@enduml

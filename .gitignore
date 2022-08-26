@@ -473,4 +473,6 @@ cython_debug/
 
 yarn-error.log
 
+.DS_Store
+
 # End of https://www.toptal.com/developers/gitignore/api/python,node,angular,vuejs,jetbrains,visualstudiocode
