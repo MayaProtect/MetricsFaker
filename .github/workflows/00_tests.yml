@@ -1,0 +1,16 @@
+name: 'Test'
+
+on: ['push']
+
+jobs:
+  tests:
+    name: 'Tests'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: 'Install python'
+        run: apt install python3 pip3
+      - name: 'Install unittest'
+        run: pip install unittest
+      - name: 'Execute tests'
+        run: python3 -m unittest discover

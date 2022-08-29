@@ -88,6 +88,7 @@ Station *-- HiveCollection
 
 class StationCollection {
     collect_data() : list
+    collect_hive_data() : list
     create_station() : Station
 }
 StationCollection *-- Station

@@ -5,17 +5,14 @@ from mf_core.metrics_history_line import MetricsHistoryLine
 
 
 class MetricsHistory(list):
-    def add_data(self, temperature: float, weight: float, sound_level: float) -> None:
+    def add_data(self, metrics: MetricsHistoryLine) -> None:
         """
         Insert a new line in history
 
-        :param temperature: Temperature
-        :param weight: Weight
-        :param sound_level: Sound Level
+        :param metrics: Metrics to add
         :return: Nothing
         """
-        data_metric = MetricsHistoryLine(temperature, weight, sound_level)
-        self.append(data_metric)
+        self.append(metrics)
 
     def get_lines_between(self, timestamp_start: int, timestamp_end: int = 0) -> MetricsHistory:
         if timestamp_end == 0:
