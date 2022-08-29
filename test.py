@@ -247,6 +247,7 @@ class TestMetricsFaker(unittest.TestCase):
         for i in range(5):
             sc.create_station()
             for j in range(5):
-                sc[i].insert_data(1.0, 1.0, 1.0)
+                sc[i].hive_collection.create_hive()
+                sc[i].hive_collection[j].insert_data(1.0, 1.0, 1.0)
         data = sc.collect_hives_data()
-        self.assertEqual(len(data), 50)
+        self.assertEqual(len(data), 25)
