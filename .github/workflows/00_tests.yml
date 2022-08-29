@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: 'Install python'
-        run: apt install python3 pip3
+        run: sudo apt install python3 pip3
       - name: 'Install unittest'
         run: pip install unittest
       - name: 'Execute tests'
