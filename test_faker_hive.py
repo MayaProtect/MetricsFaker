@@ -20,8 +20,8 @@ class TestHiveFaker(unittest.TestCase):
         self.assertGreaterEqual(self.__hive.last_temperature, 10.0)
         self.assertLessEqual(self.__hive.last_temperature, 45.0)
         weight1 = self.__hive.last_weight
-        self.assertGreaterEqual(self.__hive.last_weight, 10.0)
-        self.assertLessEqual(self.__hive.last_weight, 100.0)
+        self.assertGreaterEqual(self.__hive.last_weight, 10000.0)
+        self.assertLessEqual(self.__hive.last_weight, 100000.0)
         sound_level1 = self.__hive.last_sound_level
         self.assertGreaterEqual(self.__hive.last_sound_level, 35.0)
         self.assertLessEqual(self.__hive.last_sound_level, 75.0)
@@ -30,7 +30,7 @@ class TestHiveFaker(unittest.TestCase):
         weight2 = self.__hive.last_weight
         sound_level2 = self.__hive.last_sound_level
         self.assertTrue(temp1 * 0.99 <= temp2 <= temp1 * 1.01)
-        self.assertTrue(weight1 * 0.99 <= weight2 <= weight1 * 1.01)
+        self.assertTrue(weight1 * 0.90 <= weight2 <= weight1 * 1.10)
         self.assertTrue(sound_level1 * 0.99 <= sound_level2 <= sound_level1 * 1.01)
 
     def test_generate_1_min(self):
