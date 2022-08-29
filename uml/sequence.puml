@@ -1,0 +1,62 @@
+@startuml
+actor MetricsFaker as faker
+entity StationCollection as sc
+entity Station as s
+entity HiveCollection as hc
+entity Hive as h
+database mongodb as mdb
+database opentsdb as tsdb
+entity logger as log
+
+== Initialization ==
+autonumber 1.0
+faker -> log : Log faker launched
+activate faker
+activate log
+
+== Request Data ==
+autonumber 2.0
+faker -> mdb : Request Station to DB
+alt#Gold #LightGreen DB Request OK
+    activate faker
+    activate mdb
+    mdb -> faker : Respond
+    deactivate mdb
+    faker -> sc : Create Stations
+    activate sc
+    sc -> s : Create Station
+    activate s
+    s -> hc : Create Hives
+    activate hc
+    hc -> h : Create Hive
+    activate h
+    h -> log : Log Hive creation
+    h -> hc : Return Ok
+    deactivate h
+    hc -> log : Log HiveCollection creation
+    hc -> s : Return Ok
+    deactivate hc
+    s -> log : Log Station creation
+    s -> sc : Return Ok
+    deactivate s
+    sc -> log : Log StationCollection creation
+    sc -> faker : Return Ok
+    deactivate sc
+    faker -> log : Log loading Ok
+else #Pink DB Request KO
+    autonumber 2.2
+    faker -> log : Log Error DB
+    destroy faker
+end
+
+== Work Loop ==
+autonumber 3.0
+faker -> log : Log Launch Work Loop
+faker -> sc : Send run Signal
+activate sc
+
+
+deactivate faker
+deactivate log
+
+@enduml
