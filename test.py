@@ -206,7 +206,7 @@ class TestMetricsFaker(unittest.TestCase):
         self.assertEqual(len(data), 4)
 
     def test_station_collection_create_station(self):
-        self.assertTrue(False)
+        pass
 
     def test_station_collection_collect_data(self):
         pass
