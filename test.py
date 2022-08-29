@@ -7,6 +7,7 @@ from mf_core import HiveMetricsHistoryLine
 from mf_core import StationMetricsHistoryLine
 from mf_core import Station
 from mf_core import HiveCollection
+from mf_core import StationCollection
 
 
 class TestMetricsFaker(unittest.TestCase):
@@ -206,10 +207,40 @@ class TestMetricsFaker(unittest.TestCase):
         self.assertEqual(len(data), 4)
 
     def test_station_collection_create_station(self):
-        pass
+        sc = StationCollection()
+        uuid = sc.create_station()
+        self.assertTrue(type(uuid) == UUID)
+        self.assertTrue(str(sc[0].uuid) == str(uuid))
+        sc.create_station()
+        sc.create_station()
+        self.assertEqual(len(sc), 3)
 
     def test_station_collection_collect_data(self):
-        pass
+        timestamp_start = int(time.time())
+        sc = StationCollection()
+        uuid = sc.create_station()
+        sc[0].insert_data(1.0, 1.0, 1.0, 1.0, 1.0)
+        time.sleep(1)
+        data = sc.collect_data()
+        self.assertEqual(len(data), 2)
+        self.assertEqual(len(data[0]), 7)
+        self.assertEqual(str(data[0]["station_id"]), str(uuid))
+        timestamp_end = int(time.time())
+        self.assertTrue(timestamp_start <= data[0]["timestamp"] <= timestamp_end)
+        self.assertTrue(type(data[0]["timestamp"]) == int)
+        time.sleep(5)
+        sc[0].insert_data(1.0, 1.0, 1.0, 1.0, 1.0)
+        sc[0].insert_data(1.0, 1.0, 1.0, 1.0, 1.0)
+        sc[0].insert_data(1.0, 1.0, 1.0, 1.0, 1.0)
+        sc[0].insert_data(1.0, 1.0, 1.0, 1.0, 1.0)
+        data = sc.collect_data()
+        self.assertEqual(len(data), 4)
 
     def test_station_collection_collect_hives_data(self):
-        pass
+        sc = StationCollection()
+        for i in range(5):
+            sc.create_station()
+            for j in range(5):
+                sc[i].insert_data(1.0, 1.0, 1.0)
+        data = sc.collect_hives_data()
+        self.assertEqual(len(data), 50)
