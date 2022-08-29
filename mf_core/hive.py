@@ -30,6 +30,9 @@ class Hive(MonitoredObject):
     def last_weight(self, value: float = 0.0) -> None:
         self.__last_weight = value
 
+    def generate_data(self, timestamp: int = 0):
+        pass
+
     def insert_data(self, temperature: float, weight: float, sound_level: float) -> None:
         """
         Insert new data into hive object
