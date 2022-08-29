@@ -2,8 +2,8 @@ from mf_core.metrics_history_line import MetricsHistoryLine
 
 
 class HiveMetricsHistoryLine(MetricsHistoryLine):
-    def __init__(self, temperature, weight, sound_level):
-        super().__init__(temperature)
+    def __init__(self, temperature, weight, sound_level, timestamp: int = 0):
+        super().__init__(temperature, timestamp)
         self.__weight = weight
         self.__sound_level = sound_level
 
