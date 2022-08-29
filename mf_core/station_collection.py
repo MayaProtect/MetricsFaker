@@ -29,4 +29,7 @@ class StationCollection(list):
         return data
 
     def collect_hives_data(self) -> list:
-        pass
+        data = []
+        for station in self:
+            data.extend(station.hive_collection.collect_data())
+        return data
