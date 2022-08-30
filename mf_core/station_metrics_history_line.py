@@ -2,8 +2,8 @@ from mf_core.metrics_history_line import MetricsHistoryLine
 
 
 class StationMetricsHistoryLine(MetricsHistoryLine):
-    def __init__(self, temperature, sun, battery, wind, rain):
-        super().__init__(temperature)
+    def __init__(self, temperature, sun, battery, wind, rain, timestamp: int = 0):
+        super().__init__(temperature, timestamp)
         self.__sun = sun
         self.__battery_state = battery
         self.__wind = wind
