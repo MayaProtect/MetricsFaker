@@ -5,8 +5,8 @@ from mf_core import Station
 
 # noinspection DuplicatedCode
 class TestStationFaker(unittest.TestCase):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, methodName):
+        super().__init__(methodName)
         self.__station = Station()
 
     def test_generate_data(self):
@@ -30,7 +30,7 @@ class TestStationFaker(unittest.TestCase):
         battery_state2 = self.__station.last_battery_state
         rain2 = self.__station.last_rain
         wind2 = self.__station.last_wind
-        self.assertGreaterEqual(temp1, -15.0)
+        self.assertGreaterEqual(temp1, 0.0)
         self.assertLessEqual(temp1, 45.0)
         self.assertGreaterEqual(sun1, 0.0)
         self.assertLessEqual(sun1, 1.0)
@@ -41,10 +41,10 @@ class TestStationFaker(unittest.TestCase):
         self.assertGreaterEqual(wind1, 0.0)
         self.assertLessEqual(wind1, 50.0)
         self.assertTrue(temp1 * 0.99 <= temp2 <= temp1 * 1.01)
-        self.assertTrue(sun1 * 0.99 <= sun2 <= sun1 * 1.01)
+        self.assertTrue(sun1 - 0.02 <= sun2 <= sun1 + 0.02)
         self.assertTrue(battery_state1 - 0.02 <= battery_state2 <= battery_state1 + 0.02 and battery_state1 <= 1)
         self.assertTrue(rain2 >= rain1 or rain2 == 0.0)
-        self.assertTrue(wind1 * 0.9 <= wind2 <= wind1 * 1.1)
+        self.assertTrue(wind1 - 0.02 <= wind2 <= wind1 + 0.02)
 
     def test_generate_1_min(self):
         timestamp_now = int(time.time())
