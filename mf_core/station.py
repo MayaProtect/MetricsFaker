@@ -90,16 +90,3 @@ class Station(MonitoredObject):
             new_rain = (self.__last_rain + rand_rain) if (self.__last_rain + rand_rain) <= max_rain else max_rain
 
         self.insert_data(new_temp, new_sun, new_battery_state, new_wind, new_rain, timestamp)
-
-    @staticmethod
-    def calc_new_value(last_value, min_value, max_value, delta: int = 10):
-        new_value = (randint(int(last_value * 100) - delta,
-                             int(last_value * 100) + delta) / 100)
-
-        if new_value < (min_value / 100):
-            new_value = min_value / 100
-
-        if new_value > (max_value / 100):
-            new_value = max_value / 100
-
-        return new_value
