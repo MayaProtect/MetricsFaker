@@ -1,3 +1,5 @@
+from random import randint
+
 from mf_core.monitored_object import MonitoredObject
 from mf_core.station_metrics_history_line import StationMetricsHistoryLine
 from mf_core.hive_collection import HiveCollection
@@ -50,11 +52,54 @@ class Station(MonitoredObject):
     def hive_collection(self):
         return self.__hive_collection
 
-    def insert_data(self, temp: float, sun: float, battery: float, wind: float, rain: float):
-        metrics = StationMetricsHistoryLine(self._last_temperature, self.__last_sun, self.__last_battery_state, self.__last_wind, self.__last_rain)
+    def insert_data(self, temp: float, sun: float, battery: float, wind: float, rain: float, timestamp: int = 0):
+        metrics = StationMetricsHistoryLine(self._last_temperature, self.__last_sun, self.__last_battery_state,
+                                            self.__last_wind, self.__last_rain, timestamp)
         super().metrics_history.add_data(metrics)
         self._last_temperature = temp
         self.__last_sun = sun
         self.__last_battery_state = battery
         self.__last_wind = wind
         self.__last_rain = rain
+
+    def generate_data(self, timestamp: int = 0):
+        min_temp = 1000
+        max_temp = 4500
+        min_sun = 0
+        max_sun = 100
+        min_battery_state = 1
+        max_battery_state = 100
+        min_wind = 0
+        max_wind = 50
+        min_rain = 0
+        max_rain = 1000
+
+        if len(self.metrics_history) == 0:
+            new_temp = randint(min_temp, max_temp) / 100
+            new_sun = randint(min_sun, max_sun) / 100
+            new_battery_state = randint(min_battery_state, max_battery_state) / 100
+            new_wind = randint(min_wind, max_wind) / 100
+            new_rain = randint(min_rain, max_rain) / 100
+        else:
+            new_temp = Station.calc_new_value(self._last_temperature, min_temp, max_temp)
+            new_sun = Station.calc_new_value(self.__last_sun, min_sun, max_sun, 1)
+            new_battery_state = Station.calc_new_value(self.__last_battery_state, min_battery_state, max_battery_state,
+                                                       1)
+            new_wind = Station.calc_new_value(self.__last_wind, min_wind, max_wind, 1)
+            rand_rain = randint(0, 100) / 100
+            new_rain = (self.__last_rain + rand_rain) if (self.__last_rain + rand_rain) <= max_rain else max_rain
+
+        self.insert_data(new_temp, new_sun, new_battery_state, new_wind, new_rain, timestamp)
+
+    @staticmethod
+    def calc_new_value(last_value, min_value, max_value, delta: int = 10):
+        new_value = (randint(int(last_value * 100) - delta,
+                             int(last_value * 100) + delta) / 100)
+
+        if new_value < (min_value / 100):
+            new_value = min_value / 100
+
+        if new_value > (max_value / 100):
+            new_value = max_value / 100
+
+        return new_value
