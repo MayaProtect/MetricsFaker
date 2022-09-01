@@ -80,13 +80,13 @@ class Station(MonitoredObject):
         """
         min_temp = 1000
         max_temp = 4500
-        min_sun = 0
+        min_sun = 1
         max_sun = 100
         min_battery_state = 1
         max_battery_state = 100
-        min_wind = 0
+        min_wind = 1
         max_wind = 50
-        min_rain = 0
+        min_rain = 1
         max_rain = 1000
 
         if len(self.metrics_history) == 0:

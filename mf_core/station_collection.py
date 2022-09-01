@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from uuid import UUID
 from time import time
 from mf_core.station import Station
@@ -45,3 +47,14 @@ class StationCollection(list):
         for station in self:
             data.extend(station.hive_collection.collect_data())
         return data
+
+    def get_by_uuid(self, uuid: UUID) -> Station | None:
+        """
+        Returns the station with the given uuid.
+        :param uuid:
+        :return:
+        """
+        for station in self:
+            if station.uuid == uuid:
+                return station
+        return None
