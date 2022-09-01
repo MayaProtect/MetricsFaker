@@ -15,6 +15,12 @@ class MetricsHistory(list):
         self.append(metrics)
 
     def get_lines_between(self, timestamp_start: int, timestamp_end: int = 0) -> MetricsHistory:
+        """
+        Returns the lines between the given timestamps.
+        :param timestamp_start:
+        :param timestamp_end:
+        :return:
+        """
         if timestamp_end == 0:
             timestamp_end = time()
 

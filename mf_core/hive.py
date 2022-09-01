@@ -32,6 +32,11 @@ class Hive(MonitoredObject):
         self.__last_weight = value
 
     def generate_data(self, timestamp: int = 0):
+        """
+        Generates random data for the hive object
+        :param timestamp:
+        :return:
+        """
         min_temp = 1000
         max_temp = 4500
         min_weight = 1000000
@@ -44,24 +49,11 @@ class Hive(MonitoredObject):
             new_weight = (random.randint(min_weight, max_weight) / 100)
             new_sound_level = (random.randint(min_sound_level, max_sound_level) / 100)
         else:
-            new_temp = Hive.__calc_new_value(self._last_temperature, min_temp, max_temp)
-            new_weight = Hive.__calc_new_value(self.__last_weight, min_weight, max_weight, 1000)
-            new_sound_level = Hive.__calc_new_value(self.__last_sound_level, min_sound_level, max_sound_level)
+            new_temp = Hive.calc_new_value(self._last_temperature, min_temp, max_temp)
+            new_weight = Hive.calc_new_value(self.__last_weight, min_weight, max_weight, 1000)
+            new_sound_level = Hive.calc_new_value(self.__last_sound_level, min_sound_level, max_sound_level)
 
         self.insert_data(new_temp, new_weight, new_sound_level, timestamp)
-
-    @staticmethod
-    def __calc_new_value(last_value, min_value, max_value, delta: int = 10):
-        new_value = (random.randint(int(last_value * 100) - delta,
-                                    int(last_value * 100) + delta) / 100)
-
-        if new_value < (min_value / 100):
-            new_value = min_value / 100
-
-        if new_value > (max_value / 100):
-            new_value = max_value / 100
-
-        return new_value
 
     def insert_data(self, temperature: float, weight: float, sound_level: float, timestamp: int = 0) -> None:
         """

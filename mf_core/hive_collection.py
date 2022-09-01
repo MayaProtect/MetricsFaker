@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from uuid import UUID
 from mf_core.hive import Hive
 from time import time
@@ -9,12 +11,20 @@ class HiveCollection(list):
         self.__last_collect_timestamp = 0
 
     def create_hive(self) -> UUID:
+        """
+        Creates a new hive and returns its uuid.
+        :return:
+        """
         hive = Hive()
         uuid = hive.uuid
         self.append(hive)
         return uuid
 
     def collect_data(self) -> list:
+        """
+        Collects the data from the hives.
+        :return:
+        """
         data = []
         timestamp = int(time())
         for hive in self:

@@ -9,12 +9,20 @@ class StationCollection(list):
         self.__last_collect_timestamp = 0
 
     def create_station(self) -> UUID:
+        """
+        Creates a new station and returns its uuid.
+        :return:
+        """
         station = Station()
         uuid = station.uuid
         self.append(station)
         return uuid
 
     def collect_data(self) -> list:
+        """
+        Collects the data from the stations.
+        :return:
+        """
         data = []
         timestamp = int(time())
         for station in self:
@@ -29,6 +37,10 @@ class StationCollection(list):
         return data
 
     def collect_hives_data(self) -> list:
+        """
+        Collects the data from the hives.
+        :return:
+        """
         data = []
         for station in self:
             data.extend(station.hive_collection.collect_data())
