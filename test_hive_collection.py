@@ -45,3 +45,14 @@ class TestHiveCollection(unittest.TestCase):
         hc[0].insert_data(1.0, 1.0, 1.0)
         data = hc.collect_data()
         self.assertEqual(len(data), 4)
+
+    def test_hive_collection_collect_data_with_no_data(self):
+        hc = HiveCollection()
+        hc.create_hive()
+        data = hc.collect_data()
+        self.assertEqual(len(data), 0)
+
+    def test_hive_collection_collect_data_with_no_hive(self):
+        hc = HiveCollection()
+        data = hc.collect_data()
+        self.assertEqual(len(data), 0)
