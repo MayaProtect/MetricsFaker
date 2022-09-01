@@ -36,3 +36,14 @@ class HiveCollection(list):
 
         self.__last_collect_timestamp = timestamp if timestamp > self.__last_collect_timestamp else (timestamp + 1)
         return data
+
+    def get_by_uuid(self, uuid: UUID) -> Hive | None:
+        """
+        Returns the hive with the given uuid.
+        :param uuid:
+        :return:
+        """
+        for hive in self:
+            if hive.uuid == uuid:
+                return hive
+        return None
