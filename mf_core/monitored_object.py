@@ -31,6 +31,14 @@ class MonitoredObject:
 
     @staticmethod
     def calc_new_value(last_value, min_value, max_value, delta: int = 10):
+        """
+        Calculate new value for temperature, humidity, etc.
+        :param last_value:
+        :param min_value:
+        :param max_value:
+        :param delta:
+        :return:
+        """
         new_value = (randint(int(last_value * 100) - delta,
                              int(last_value * 100) + delta) / 100)
 

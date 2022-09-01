@@ -32,6 +32,11 @@ class Hive(MonitoredObject):
         self.__last_weight = value
 
     def generate_data(self, timestamp: int = 0):
+        """
+        Generates random data for the hive object
+        :param timestamp:
+        :return:
+        """
         min_temp = 1000
         max_temp = 4500
         min_weight = 1000000

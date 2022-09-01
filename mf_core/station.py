@@ -53,6 +53,16 @@ class Station(MonitoredObject):
         return self.__hive_collection
 
     def insert_data(self, temp: float, sun: float, battery: float, wind: float, rain: float, timestamp: int = 0):
+        """
+        Inserts the data into the station metrics history.
+        :param temp:
+        :param sun:
+        :param battery:
+        :param wind:
+        :param rain:
+        :param timestamp:
+        :return:
+        """
         metrics = StationMetricsHistoryLine(self._last_temperature, self.__last_sun, self.__last_battery_state,
                                             self.__last_wind, self.__last_rain, timestamp)
         super().metrics_history.add_data(metrics)
@@ -63,6 +73,11 @@ class Station(MonitoredObject):
         self.__last_rain = rain
 
     def generate_data(self, timestamp: int = 0):
+        """
+        Generates the data for the station.
+        :param timestamp:
+        :return:
+        """
         min_temp = 1000
         max_temp = 4500
         min_sun = 0
