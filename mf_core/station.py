@@ -3,6 +3,7 @@ from random import randint
 from mf_core.monitored_object import MonitoredObject
 from mf_core.station_metrics_history_line import StationMetricsHistoryLine
 from mf_core.hive_collection import HiveCollection
+from mf_core.owner import Owner
 from uuid import UUID
 
 
@@ -15,6 +16,7 @@ class Station(MonitoredObject):
         self.__last_battery_state = 0.0
         self.__last_rain = 0.0
         self.__hive_collection = HiveCollection()
+        self.__owner = None
 
     @property
     def last_sun(self) -> float:
@@ -51,6 +53,14 @@ class Station(MonitoredObject):
     @property
     def hive_collection(self):
         return self.__hive_collection
+
+    @property
+    def owner(self) -> Owner:
+        return self.__owner
+
+    @owner.setter
+    def owner(self, value: Owner):
+        self.__owner = value
 
     def insert_data(self, temp: float, sun: float, battery: float, wind: float, rain: float, timestamp: int = 0):
         """
