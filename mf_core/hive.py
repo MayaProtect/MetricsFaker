@@ -3,6 +3,7 @@ from uuid import uuid4, UUID
 from mf_core.monitored_object import MonitoredObject
 from mf_core.hive_metrics_history_line import HiveMetricsHistoryLine
 from mf_core.hive_event_collection import HiveEventCollection
+from mf_core.owner import Owner
 from time import time
 
 
@@ -16,6 +17,7 @@ class Hive(MonitoredObject):
         self.__last_sound_level = 0.0
         self.__last_weight = 0.0
         self.__events = HiveEventCollection()
+        self.__owner = None
 
     @property
     def last_sound_level(self) -> float:
@@ -36,6 +38,14 @@ class Hive(MonitoredObject):
     @property
     def events(self) -> HiveEventCollection:
         return self.__events
+
+    @property
+    def owner(self) -> Owner:
+        return self.__owner
+
+    @owner.setter
+    def owner(self, value: Owner) -> None:
+        self.__owner = value
 
     def add_event(self, event_type: str, event_message: str, event_timestamp: int = 0) -> UUID:
         """

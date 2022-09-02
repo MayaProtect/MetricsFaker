@@ -67,29 +67,6 @@ class TestMetricsFaker(unittest.TestCase):
         self.assertEqual(len(hive.metrics_history.get_lines_between(timestamp_start + 2, timestamp_end)), 6)
         self.assertEqual(len(hive.metrics_history.get_lines_between(timestamp_start)), 12)
 
-    def test_instantiate_station(self):
-        station = Station()
-        self.assertNotEqual(station.uuid, None)
-        self.assertEqual(station.last_temperature, 0.0)
-        self.assertEqual(station.last_sun, 0.0)
-        self.assertEqual(station.last_battery_state, 0.0)
-        self.assertEqual(station.last_wind, 0.0)
-        self.assertEqual(station.last_rain, 0.0)
-
-    def test_instantiate_station_with_uuid(self):
-        uuid = uuid4()
-        station = Station(uuid)
-        self.assertEqual(station.uuid, uuid)
-
-    def test_station_insert_data(self):
-        station = Station()
-        station.insert_data(1.0, 2.0, 3.0, 4.0, 5.0)
-        self.assertEqual(station.last_temperature, 1.0)
-        self.assertEqual(station.last_sun, 2.0)
-        self.assertEqual(station.last_battery_state, 3.0)
-        self.assertEqual(station.last_wind, 4.0)
-        self.assertEqual(station.last_rain, 5.0)
-
     def test_station_history_return_type(self):
         station = Station()
         self.assertTrue(type(station.metrics_history) == MetricsHistory)
