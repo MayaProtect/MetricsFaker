@@ -1,5 +1,5 @@
 import unittest
-from mf_core import Hive, HiveEventCollection
+from mf_core import Hive, HiveEventCollection, Owner
 from uuid import uuid4
 
 
@@ -34,3 +34,18 @@ class TestHive(unittest.TestCase):
     def test_hive_add_event(self):
         self.__hive.add_event("test", "test", 0)
         self.assertEqual(len(self.__hive.events), 1)
+
+    def test_set_owner(self):
+        owner = Owner()
+        self.__hive.owner = owner
+        self.assertTrue(self.__hive.owner == owner)
+
+    def test_get_owner(self):
+        owner = Owner()
+        self.__hive.owner = owner
+        self.assertTrue(self.__hive.owner == owner)
+
+    def test_get_owner_uuid(self):
+        owner = Owner()
+        self.__hive.owner = owner
+        self.assertTrue(self.__hive.owner.uuid == owner.uuid)
