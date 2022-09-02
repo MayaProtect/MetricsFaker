@@ -11,26 +11,6 @@ from mf_core import StationCollection
 
 # noinspection DuplicatedCode,PyUnresolvedReferences
 class TestMetricsFaker(unittest.TestCase):
-    def test_instantiate_hive(self):
-        hive = Hive()
-        self.assertNotEqual(hive.uuid, None)
-        self.assertEqual(hive.last_weight, 0.0)
-        self.assertEqual(hive.last_sound_level, 0.0)
-        self.assertEqual(hive.last_temperature, 0.0)
-
-    def test_instantiate_hive_with_defined_uuid(self):
-        uuid = uuid4()
-        hive = Hive(uuid)
-        self.assertEqual(hive.uuid, uuid)
-
-    def test_hive_insert_data(self):
-        uuid = uuid4()
-        hive = Hive(uuid)
-        hive.insert_data(1.5, 2.0, 2.5)
-        self.assertEqual(hive.uuid, uuid)
-        self.assertEqual(hive.last_temperature, 1.5)
-        self.assertEqual(hive.last_weight, 2.0)
-        self.assertEqual(hive.last_sound_level, 2.5)
 
     def test_hive_metrics_history_return_type(self):
         hive = Hive()
