@@ -1,8 +1,9 @@
 import random
 from uuid import uuid4, UUID
 from mf_core.monitored_object import MonitoredObject
-from mf_core.metrics_history import MetricsHistory
 from mf_core.hive_metrics_history_line import HiveMetricsHistoryLine
+from mf_core.hive_event_collection import HiveEventCollection
+from time import time
 
 
 class Hive(MonitoredObject):
@@ -14,6 +15,7 @@ class Hive(MonitoredObject):
         super().__init__(uuid)
         self.__last_sound_level = 0.0
         self.__last_weight = 0.0
+        self.__events = HiveEventCollection()
 
     @property
     def last_sound_level(self) -> float:
@@ -30,6 +32,23 @@ class Hive(MonitoredObject):
     @last_weight.setter
     def last_weight(self, value: float = 0.0) -> None:
         self.__last_weight = value
+
+    @property
+    def events(self) -> HiveEventCollection:
+        return self.__events
+
+    def add_event(self, event_type: str, event_message: str, event_timestamp: int = 0) -> UUID:
+        """
+        Adds an event to the hive.
+        :param event_type:
+        :param event_message:
+        :param event_timestamp:
+        :return:
+        """
+        if event_timestamp == 0:
+            event_timestamp = int(time())
+        uuid = self.__events.create_event(event_type, event_timestamp, event_message)
+        return uuid
 
     def generate_data(self, timestamp: int = 0):
         """
