@@ -1,16 +1,13 @@
 import time
 import unittest
-from uuid import uuid4, UUID
 from mf_core import Hive
 from mf_core import MetricsHistory
 from mf_core import HiveMetricsHistoryLine
 from mf_core import StationMetricsHistoryLine
 from mf_core import Station
-from mf_core import StationCollection
 
 
-# noinspection DuplicatedCode,PyUnresolvedReferences
-class TestMetricsFaker(unittest.TestCase):
+class TestMetricsHistory(unittest.TestCase):
 
     def test_hive_metrics_history_return_type(self):
         hive = Hive()

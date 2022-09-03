@@ -5,15 +5,11 @@ from tests import *
 def run_tests(verbosity: int = 3):
     suite = unittest.TestSuite()
     loader = unittest.TestLoader()
-    suite.addTest(loader.loadTestsFromModule(test))
     suite.addTest(loader.loadTestsFromModule(test_hive_event))
     suite.addTest(loader.loadTestsFromModule(test_hive_event_collection))
     suite.addTest(loader.loadTestsFromModule(test_hive))
     suite.addTest(loader.loadTestsFromModule(test_hive_collection))
-    # suite.addTest(loader.loadTestsFromModule(test_metrics_history))
-    # suite.addTest(loader.loadTestsFromModule(test_metrics_history_line))
-    # suite.addTest(loader.loadTestsFromModule(test_hive_metrics_history_line))
-    # suite.addTest(loader.loadTestsFromModule(test_station_metrics_history_line))
+    suite.addTest(loader.loadTestsFromModule(test_metrics_history))
     suite.addTest(loader.loadTestsFromModule(test_station))
     suite.addTest(loader.loadTestsFromModule(test_station_collection))
     # suite.addTest(loader.loadTestsFromModule(test_monitored_object))
@@ -26,4 +22,4 @@ def run_tests(verbosity: int = 3):
 
 
 if __name__ == "__main__":
-    run_tests()
+    run_tests(2)
