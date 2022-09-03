@@ -1,3 +1,4 @@
+from __future__ import annotations
 from uuid import UUID, uuid4
 from random import randint
 
@@ -45,7 +46,11 @@ class Owner:
         return self.fullname
 
     @staticmethod
-    def generate_fake() -> "Owner":
+    def generate_fake() -> Owner:
+        """
+        Generate a fake owner
+        :return: Owner generated
+        """
         list_fake_firstname = ["John", "Jane", "Jack", "Jill", "Joe", "Joey", "Marc", "Marcel", "Miguel", "Michel"]
         list_fake_lastname = ["Doe", "Durant", "Dupuis", "Ponche", "Rodriguez", "Delacour", "Smith", "Dutronc",
                               "Dutilleul", "Dupont"]

@@ -60,7 +60,11 @@ class StationCollection(list):
                 return station
         return None
 
-    def generate_fake(self, owner: Owner):
+    def generate_fake(self, owner: Owner) -> None:
+        """
+        Generates fake data for the stations.
+        :param owner: The owner of the stations.
+        """
         uuid = self.create_station()
         station = self.get_by_uuid(uuid)
         station.owner = owner

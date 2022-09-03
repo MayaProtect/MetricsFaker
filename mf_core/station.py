@@ -116,7 +116,10 @@ class Station(MonitoredObject):
 
         self.insert_data(new_temp, new_sun, new_battery_state, new_wind, new_rain, timestamp)
 
-    def generate_fake_hive(self):
+    def generate_fake_hive(self) -> None:
+        """
+        Generates a fake hive for the station.
+        """
         uuid_hive = self.__hive_collection.create_hive()
         hive = self.__hive_collection.get_by_uuid(uuid_hive)
         hive.owner = self.owner
