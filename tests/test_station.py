@@ -1,6 +1,6 @@
 import unittest
 from mf_core import Station, Owner
-from uuid import uuid4
+from uuid import uuid4, UUID
 
 
 class TestStation(unittest.TestCase):
@@ -45,3 +45,11 @@ class TestStation(unittest.TestCase):
         owner = Owner(uuid)
         self.__station.owner = owner
         self.assertTrue(self.__station.owner.uuid == uuid)
+
+    def test_station_create_hive(self):
+        station = Station()
+        station.hive_collection.create_hive()
+        station.hive_collection.create_hive()
+        uuid = station.hive_collection.create_hive()
+        self.assertTrue(type(uuid) == UUID)
+        self.assertTrue(len(station.hive_collection), 3)
