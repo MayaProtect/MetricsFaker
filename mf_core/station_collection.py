@@ -3,6 +3,7 @@ from __future__ import annotations
 from uuid import UUID
 from time import time
 from mf_core.station import Station
+from mf_core.owner import Owner
 
 
 class StationCollection(list):
@@ -58,3 +59,8 @@ class StationCollection(list):
             if station.uuid == uuid:
                 return station
         return None
+
+    def generate_fake(self, owner: Owner):
+        uuid = self.create_station()
+        station = self.get_by_uuid(uuid)
+        station.owner = owner

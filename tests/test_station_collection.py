@@ -2,7 +2,7 @@ import unittest
 import time
 from uuid import UUID
 
-from mf_core import StationCollection, Station
+from mf_core import StationCollection, Station, Owner
 
 
 class TestStationCollection(unittest.TestCase):
@@ -67,3 +67,10 @@ class TestStationCollection(unittest.TestCase):
                 sc[i].hive_collection[j].insert_data(1.0, 1.0, 1.0)
         data = sc.collect_hives_data()
         self.assertEqual(len(data), 25)
+
+    def test_station_collection_generate_fake(self):
+        owner = Owner.generate_fake()
+        sc = StationCollection()
+        sc.generate_fake(owner)
+        self.assertEqual(len(sc), 1)
+        self.assertEqual(sc[0].owner, owner)
