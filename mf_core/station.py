@@ -115,3 +115,8 @@ class Station(MonitoredObject):
             new_rain = (self.__last_rain + rand_rain) if (self.__last_rain + rand_rain) <= max_rain else max_rain
 
         self.insert_data(new_temp, new_sun, new_battery_state, new_wind, new_rain, timestamp)
+
+    def generate_fake_hive(self):
+        uuid_hive = self.__hive_collection.create_hive()
+        hive = self.__hive_collection.get_by_uuid(uuid_hive)
+        hive.owner = self.owner

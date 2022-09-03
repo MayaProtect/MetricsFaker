@@ -53,3 +53,9 @@ class TestStation(unittest.TestCase):
         uuid = station.hive_collection.create_hive()
         self.assertTrue(type(uuid) == UUID)
         self.assertTrue(len(station.hive_collection), 3)
+
+    def test_generate_fake_hive(self):
+        station = Station()
+        station.generate_fake_hive()
+        self.assertTrue(len(station.hive_collection) == 1)
+        self.assertTrue(station.hive_collection[0].owner == station.owner)
