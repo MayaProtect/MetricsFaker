@@ -1,4 +1,5 @@
 from uuid import UUID, uuid4
+from random import randint
 
 
 class Owner:
@@ -42,3 +43,15 @@ class Owner:
 
     def __str__(self) -> str:
         return self.fullname
+
+    @staticmethod
+    def generate_fake() -> "Owner":
+        list_fake_firstname = ["John", "Jane", "Jack", "Jill", "Joe", "Joey", "Marc", "Marcel", "Miguel", "Michel"]
+        list_fake_lastname = ["Doe", "Durant", "Dupuis", "Ponche", "Rodriguez", "Delacour", "Smith", "Dutronc",
+                              "Dutilleul", "Dupont"]
+        list_fake_email = ["example@gmail.com", "example@hotmail.com", "example@yahoo.com", "example@outlook.com",
+                           "example@live.com", "example@orange.fr"]
+
+        return Owner(uuid4(), list_fake_firstname[randint(0, len(list_fake_firstname) - 1)],
+                     list_fake_lastname[randint(0, len(list_fake_lastname) - 1)],
+                     list_fake_email[randint(0, len(list_fake_email) - 1)])

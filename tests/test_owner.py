@@ -45,3 +45,10 @@ class TestOwner(unittest.TestCase):
         self.__owner.firstname = "John"
         self.__owner.lastname = "Doe"
         self.assertEqual(str(self.__owner), "John Doe")
+
+    def test_owner_generate_fake(self):
+        owner = Owner.generate_fake()
+        self.assertTrue(type(owner) == Owner)
+        self.assertTrue(owner.firstname is not None)
+        self.assertTrue(owner.lastname is not None)
+        self.assertTrue(owner.email is not None)
