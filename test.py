@@ -2,7 +2,7 @@ import unittest
 from tests import *
 
 
-def run_tests(verbosity: int = 3):
+def run_tests(verbosity: int = 2):
     suite = unittest.TestSuite()
     loader = unittest.TestLoader()
     suite.addTest(loader.loadTestsFromModule(test_hive_event))
