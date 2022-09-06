@@ -3,8 +3,8 @@ from os import environ as env
 import time
 
 mongo_params = {
-    "host": 'mongodb' if env.get('MONGO_HOST') is None else env.get('MONGO_HOST'),
-    "port": 8090 if env.get('MONGO_PORT') is None else env.get('MONGO_PORT'),
+    "host": 'localhost' if env.get('MONGO_HOST') is None else env.get('MONGO_HOST'),
+    "port": 27017 if env.get('MONGO_PORT') is None else env.get('MONGO_PORT'),
 }
 
 opentsdb_params = {
@@ -21,7 +21,7 @@ faker_params = {
     "max_hives_per_station": 25 if env.get('MAX_HIVES_PER_STATION') is None else env.get('MAX_HIVES_PER_STATION'),
 }
 
-app = App(mongo_params, opentsdb_params, faker_params, int(time.time() - 60 * 60 * 24))
+app = App(mongo_params, opentsdb_params, faker_params, int(time.time() - 60 * 10))
 
 if __name__ == '__main__':
     app.run()

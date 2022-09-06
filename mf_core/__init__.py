@@ -10,3 +10,4 @@ from mf_core.station_collection import StationCollection
 from mf_core.hive_event import HiveEvent
 from mf_core.hive_event_collection import HiveEventCollection
 from mf_core.owner import Owner
+from mf_core.serializable import Serializable

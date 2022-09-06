@@ -99,3 +99,12 @@ class Hive(MonitoredObject):
         self._last_temperature = temperature
         self.__last_sound_level = sound_level
         self.__last_weight = weight
+
+    def to_dict(self) -> dict:
+        return {"uuid": self.uuid,
+                "temperature": self._last_temperature,
+                "weight": self.__last_weight,
+                "sound_level": self.__last_sound_level,
+                "events": self.__events.to_array(),
+                "owner": self.__owner.to_dict()
+                }

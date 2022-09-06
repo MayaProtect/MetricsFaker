@@ -3,6 +3,8 @@ import logging
 import threading
 import time
 
+from pymongo import MongoClient
+
 from mf_core import StationCollection, Owner
 from app.queued_item import QueuedItem
 from app.worker import Worker
@@ -29,7 +31,7 @@ class MetricsFaker(threading.Thread):
         self.__owner_collection = []
 
         self.__cpu_count = multiprocessing.cpu_count()
-        self.__max_process_per_core = 2
+        self.__max_process_per_core = 5
         self.__active_process = 0
         self.__worker_pool = []
 
@@ -42,6 +44,9 @@ class MetricsFaker(threading.Thread):
         self.__logger.handlers[1].setFormatter(formatter)
 
         self.__logger.info("MetricsFaker App launched")
+
+        self.__mongo_client = MongoClient(self.__mongo_params['host'], self.__mongo_params['port'], uuidRepresentation='standard')
+        self.__mongo_db = self.__mongo_client['mayaprotect']
 
     @property
     def owner_collection(self):
@@ -111,8 +116,11 @@ class MetricsFaker(threading.Thread):
         """
         Create owners
         """
+        coll = self.__mongo_db['owners']
         for i in range(randint(self.__faker_params['min_owner'], self.__faker_params['max_owner'])):
-            self.__owner_collection.append(Owner.generate_fake())
+            owner = Owner.generate_fake()
+            self.__owner_collection.append(owner)
+            coll.insert_one(owner.to_dict())
 
         self.__logger.info("{0} Owners created".format(len(self.__owner_collection)))
 
@@ -120,10 +128,12 @@ class MetricsFaker(threading.Thread):
         """
         Create stations
         """
+        coll = self.__mongo_db['stations']
         for i in range(len(self.__owner_collection)):
             for j in range(randint(self.__faker_params['min_stations_per_owner'],
                                    self.__faker_params['max_stations_per_owner'])):
                 self.__station_collection.generate_fake(self.__owner_collection[i])
+                coll.insert_one(self.__station_collection[j].to_dict())
 
         self.__logger.info("{0} Stations created".format(len(self.__station_collection)))
 
@@ -131,11 +141,19 @@ class MetricsFaker(threading.Thread):
         """
         Create hives
         """
+        coll_hives = self.__mongo_db['hives']
+        coll_stations = self.__mongo_db['stations']
+        coll_owners = self.__mongo_db['owners']
+
         nbr_hives_created = 0
-        for i in range(len(self.__station_collection)):
+        for station in self.__station_collection:
             for j in range(randint(self.__faker_params['min_hives_per_station'],
                                    self.__faker_params['max_hives_per_station'])):
-                self.__station_collection[i].generate_fake_hive()
+                station.generate_fake_hive()
                 nbr_hives_created += 1
+                coll_hives.insert_one(station.hive_collection[j].to_dict())
+                coll_hives.update_one({'uuid': station.hive_collection[j].uuid}, {'$set': {'station_uuid': station.uuid}})
+                coll_stations.update_one({'uuid': station.uuid}, {'$push': {'hives': station.hive_collection[j].uuid}})
+                coll_owners.update_one({'uuid': station.owner.uuid}, {'$push': {'hives': station.hive_collection[j].uuid}})
 
         self.__logger.info("{0} Hives created".format(nbr_hives_created))

@@ -1,9 +1,11 @@
+from abc import ABC, abstractmethod
 from random import randint
 from uuid import uuid4, UUID
 from mf_core.metrics_history import MetricsHistory
+from mf_core.serializable import Serializable
 
 
-class MonitoredObject:
+class MonitoredObject(Serializable):
     def __init__(self, uuid: UUID = None):
         self._uuid = uuid if uuid is not None else uuid4()
         self._last_temperature = 0.0
@@ -49,3 +51,7 @@ class MonitoredObject:
             new_value = max_value / 100
 
         return new_value
+
+    @abstractmethod
+    def to_dict(self) -> dict:
+        pass
