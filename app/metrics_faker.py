@@ -80,7 +80,7 @@ class MetricsFaker(threading.Thread):
             nbr_items_per_worker = int(len(queued_items) / nbr_workers)
             self.__logger.info("Creating {0} workers".format(nbr_workers))
             for i in range(nbr_workers):
-                worker = Worker(self.__logger, str(uuid4()))
+                worker = Worker(self.__logger, self.__opentsdb_params, str(uuid4()))
                 self.__worker_pool.append(worker)
                 try:
                     for j in range(nbr_items_per_worker):

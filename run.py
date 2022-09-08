@@ -8,8 +8,8 @@ mongo_params = {
 }
 
 opentsdb_params = {
-    "host": 'opentsdb' if env.get('OPENTSDB_HOST') is None else env.get('OPENTSDB_HOST'),
-    "port": 8091 if env.get('OPENTSDB_PORT') is None else env.get('OPENTSDB_PORT'),
+    "host": 'localhost' if env.get('OPENTSDB_HOST') is None else env.get('OPENTSDB_HOST'),
+    "port": 4242 if env.get('OPENTSDB_PORT') is None else env.get('OPENTSDB_PORT'),
 }
 
 faker_params = {
