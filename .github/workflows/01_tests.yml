@@ -35,7 +35,7 @@ jobs:
           pip install -r requirements.txt
           pip install coverage
       - name: 'Execute tests'
-        run: coverage run -m unittest tests/test_*.py
+        run: coverage run test.py
       - name: 'Get coverage report'
         run: coverage report > coverage_${{ matrix.python }}.txt
       - name: 'Show coverage report'
