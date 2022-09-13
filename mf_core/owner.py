@@ -52,7 +52,7 @@ class Owner(Serializable):
         Generate a fake owner
         :return: Owner generated
         """
-        list_fake_firstname = ["John", "Jane", "Jack", "Jill", "Joe", "Joey", "Marc", "Marcel", "Miguel", "Michel"]
+        list_fake_firstname = ["Claire", "Peter", "Samir", "Jill", "Joe", "Souhaïb", "Marc", "Marcel", "Miguel", "Michel"]
         list_fake_lastname = ["Doe", "Durant", "Dupuis", "Ponche", "Rodriguez", "Delacour", "Smith", "Dutronc",
                               "Dutilleul", "Dupont"]
         list_fake_email = ["example@gmail.com", "example@hotmail.com", "example@yahoo.com", "example@outlook.com",
