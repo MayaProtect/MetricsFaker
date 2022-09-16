@@ -7,7 +7,6 @@ import math
 from pymongo import MongoClient
 
 from mf_core import StationCollection, Owner
-from app.queued_item import QueuedItem
 from app.worker import Worker
 from app.metrics_exporter import MetricsExporter
 from random import randint
@@ -87,26 +86,6 @@ class MetricsFaker(threading.Thread):
             except IndexError:
                 pass
             worker.start()
-
-    def __create_queued_items(self, timestamps: list) -> list:
-        queued_items = []
-        for timestamp in timestamps:
-            for i in range(len(self.__station_collection)):
-                queued_item = QueuedItem(self.__station_collection[i], timestamp)
-                queued_items.append(queued_item)
-        return queued_items
-
-    def __calc_timestamp(self) -> list:
-        timestamps = []
-        for i in range(self.__start_timestamp, int(time.time()), 5):
-            timestamps.append(i)
-        return timestamps
-
-    def stop(self) -> None:
-        """
-        Stop MetricsFaker App
-        """
-        pass
 
     def __create_owners(self) -> None:
         """

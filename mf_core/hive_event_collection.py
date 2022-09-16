@@ -39,3 +39,5 @@ class HiveEventCollection(list):
         events_array = []
         for hive_event in self:
             events_array.append(hive_event.to_dict())
+
+        return events_array
