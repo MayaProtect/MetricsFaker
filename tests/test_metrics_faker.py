@@ -1,4 +1,7 @@
+import time
 import unittest
+import os
+import docker
 from app import MetricsFaker
 
 
@@ -7,13 +10,9 @@ class TestMetricsFaker(unittest.TestCase):
         super().__init__(methodName)
 
         self.__mongo_params = {
-            "host": 'mongodb',
-            "port": 8090,
-        }
-
-        self.__opentsdb_params = {
-            "host": 'opentsdb',
-            "port": 8091,
+            "host": 'mongodb_mf_test',
+            "port": 27019,
+            "db": "mayaprotect"
         }
 
         self.__faker_params = {
@@ -25,28 +24,24 @@ class TestMetricsFaker(unittest.TestCase):
             "max_hives_per_station": 25,
         }
 
-        self.__metrics_faker = MetricsFaker(self.__mongo_params, self.__opentsdb_params, self.__faker_params)
-
     def test_create_metrics_faker(self):
         self.assertTrue(type(self.__metrics_faker) == MetricsFaker)
 
     def test_run(self):
-        nbr_hive = 0
-        self.__metrics_faker.run()
-        self.assertTrue(self.__faker_params['min_owner'] <=
-                        len(self.__metrics_faker.owner_collection) <=
-                        self.__faker_params['max_owner'])
+        pass
+    @classmethod
+    def tearDownClass(cls) -> None:
+        os.remove("metrics_faker.log")
+        print("File metrics_faker.log removed")
+        docker_client = docker.from_env()
+        docker_client.containers.get("mongodb_mf_test").remove(force=True)
+        docker_client.close()
 
-        self.assertTrue((self.__faker_params['min_stations_per_owner'] * len(self.__metrics_faker.owner_collection)) <=
-                        len(self.__metrics_faker.station_collection) <=
-                        self.__faker_params['max_stations_per_owner'] * len(self.__metrics_faker.owner_collection))
-
-        for station in self.__metrics_faker.station_collection:
-            self.assertTrue(self.__faker_params['min_hives_per_station'] <=
-                            len(station.hive_collection) <=
-                            self.__faker_params['max_hives_per_station'])
-            nbr_hive += len(station.hive_collection)
-
-        min_hives = self.__faker_params['min_hives_per_station'] * len(self.__metrics_faker.station_collection)
-        max_hives = self.__faker_params['max_hives_per_station'] * len(self.__metrics_faker.station_collection)
-        self.assertTrue(min_hives <= nbr_hive <= max_hives)
+    @classmethod
+    def setUpClass(cls) -> None:
+        docker_client = docker.from_env()
+        print("Starting mongo")
+        docker_client.containers.run("mongo:4.2.3", detach=True, ports={'27017/tcp': 27019}, name="mongodb_mf_test")
+        time.sleep(5)
+        docker_client.close()
+        print("Mongo started")
