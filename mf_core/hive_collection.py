@@ -47,3 +47,23 @@ class HiveCollection(list):
             if hive.uuid == uuid:
                 return hive
         return None
+
+    def to_array(self) -> list:
+        """
+        Returns the hives in an array.
+        :return:
+        """
+        hives_array = []
+        for hive in self:
+            hives_array.append(hive.to_dict())
+        return hives_array
+
+    def get_uuids_list(self) -> list:
+        """
+        Returns the uuids list.
+        :return: The uuids list.
+        """
+        uuids = []
+        for hive in self:
+            uuids.append(hive.uuid)
+        return uuids

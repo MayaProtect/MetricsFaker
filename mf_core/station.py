@@ -115,3 +115,26 @@ class Station(MonitoredObject):
             new_rain = (self.__last_rain + rand_rain) if (self.__last_rain + rand_rain) <= max_rain else max_rain
 
         self.insert_data(new_temp, new_sun, new_battery_state, new_wind, new_rain, timestamp)
+
+    def generate_fake_hive(self) -> None:
+        """
+        Generates a fake hive for the station.
+        """
+        uuid_hive = self.__hive_collection.create_hive()
+        hive = self.__hive_collection.get_by_uuid(uuid_hive)
+        hive.owner = self.owner
+
+    def to_dict(self) -> dict:
+        """
+        Returns a dict representation of the station.
+        :return:
+        """
+        return {
+            'uuid': self.uuid,
+            'last_temperature': self._last_temperature,
+            'last_sun': self.__last_sun,
+            'last_battery_state': self.__last_battery_state,
+            'last_wind': self.__last_wind,
+            'last_rain': self.__last_rain,
+            'owner': self.__owner.to_dict()
+        }

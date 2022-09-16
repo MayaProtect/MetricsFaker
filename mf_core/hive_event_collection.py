@@ -30,3 +30,14 @@ class HiveEventCollection(list):
             if hive_event.uuid == uuid:
                 return hive_event
         return None
+
+    def to_array(self):
+        """
+        Returns the hive events in an array.
+        :return:
+        """
+        events_array = []
+        for hive_event in self:
+            events_array.append(hive_event.to_dict())
+
+        return events_array
