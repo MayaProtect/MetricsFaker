@@ -4,8 +4,8 @@ from uuid import uuid4, UUID
 
 
 class TestStation(unittest.TestCase):
-    def __init__(self, methodName: str = ...) -> None:
-        super().__init__(methodName)
+    def __init__(self, method_name: str = ...) -> None:
+        super().__init__(method_name)
         self.__station = Station()
 
     def test_create_station(self):
@@ -31,11 +31,6 @@ class TestStation(unittest.TestCase):
         self.assertEqual(self.__station.last_rain, 5.0)
 
     def test_station_set_owner(self):
-        owner = Owner()
-        self.__station.owner = owner
-        self.assertTrue(self.__station.owner == owner)
-
-    def test_station_get_owner(self):
         owner = Owner()
         self.__station.owner = owner
         self.assertTrue(self.__station.owner == owner)

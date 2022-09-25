@@ -5,8 +5,8 @@ from mf_core import Station
 
 # noinspection DuplicatedCode
 class TestStationFaker(unittest.TestCase):
-    def __init__(self, methodName):
-        super().__init__(methodName)
+    def __init__(self, method_name):
+        super().__init__(method_name)
         self.__station = Station()
 
     def test_generate_data(self):

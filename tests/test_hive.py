@@ -1,11 +1,11 @@
 import unittest
 from mf_core import Hive, HiveEventCollection, Owner
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 
 class TestHive(unittest.TestCase):
-    def __init__(self, methodName: str = ...) -> None:
-        super().__init__(methodName)
+    def __init__(self, method_name: str = ...) -> None:
+        super().__init__(method_name)
         self.__hive = Hive()
 
     def test_create_hive(self):
@@ -15,7 +15,7 @@ class TestHive(unittest.TestCase):
         self.assertEqual(self.__hive.last_temperature, 0.0)
 
     def test_return_coherent_uuid(self):
-        self.assertTrue(self.__hive.uuid == self.__hive.uuid)
+        self.assertTrue(type(self.__hive.uuid) is UUID)
 
     def test_create_hive_with_specified_uuid(self):
         uuid = uuid4()
@@ -38,12 +38,12 @@ class TestHive(unittest.TestCase):
     def test_set_owner(self):
         owner = Owner()
         self.__hive.owner = owner
-        self.assertTrue(self.__hive.owner == owner)
-
+        self.assertEqual(self.__hive.__owner, owner)
+        
     def test_get_owner(self):
         owner = Owner()
-        self.__hive.owner = owner
-        self.assertTrue(self.__hive.owner == owner)
+        self.__hive.__owner = owner
+        self.assertEqual(self.__hive.owner, owner)
 
     def test_get_owner_uuid(self):
         owner = Owner()

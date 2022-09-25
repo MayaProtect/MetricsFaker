@@ -25,14 +25,12 @@ class MetricsFaker(threading.Thread):
         super(MetricsFaker, self).__init__()
         self.__mongo_params = mongo_params
         self.__faker_params = faker_params
-        self.__start_timestamp = start_timestamp if start_timestamp > 0 else int(time.time())
 
         self.__station_collection = StationCollection()
         self.__owner_collection = []
 
         self.__cpu_count = multiprocessing.cpu_count()
         self.__max_process_per_core = 5
-        self.__active_process = 0
         self.__worker_pool = []
 
         self.__logger = logging.getLogger('MetricsFaker')
@@ -92,7 +90,7 @@ class MetricsFaker(threading.Thread):
         Create owners
         """
         coll = self.__mongo_db['owners']
-        for i in range(randint(self.__faker_params['min_owner'], self.__faker_params['max_owner'])):
+        for _ in range(randint(self.__faker_params['min_owner'], self.__faker_params['max_owner'])):
             owner = Owner.generate_fake()
             self.__owner_collection.append(owner)
             coll.insert_one(owner.to_dict())
