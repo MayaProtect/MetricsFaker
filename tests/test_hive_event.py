@@ -1,5 +1,6 @@
 import unittest
 from mf_core import HiveEvent
+from uuid import UUID
 
 
 class TestHiveEvent(unittest.TestCase):
@@ -8,10 +9,7 @@ class TestHiveEvent(unittest.TestCase):
         self.__hive_event = HiveEvent("test", 0, "test")
 
     def test_create_event(self):
-        self.assertTrue(type(self.__hive_event) == HiveEvent)
+        self.assertTrue(type(self.__hive_event) is HiveEvent)
 
     def test_return_coherent_uuid(self):
-        self.assertTrue(self.__hive_event.uuid == self.__hive_event.uuid)
-
-    def test_get_by_uuid(self):
-        self.assertTrue(self.__hive_event == self.__hive_event)
+        self.assertTrue(type(self.__hive_event.uuid) is UUID)
