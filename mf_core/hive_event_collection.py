@@ -5,7 +5,6 @@ from mf_core.hive_event import HiveEvent
 class HiveEventCollection(list):
     def __init__(self):
         super().__init__()
-        self.__last_collect_timestamp = 0
 
     def create_event(self, event_type: str, event_timestamp: int, event_text: str) -> UUID:
         """

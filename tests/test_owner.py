@@ -4,8 +4,8 @@ from uuid import uuid4
 
 
 class TestOwner(unittest.TestCase):
-    def __init__(self, methodName: str = ...) -> None:
-        super().__init__(methodName)
+    def __init__(self, method_name: str = ...) -> None:
+        super().__init__(method_name)
         self.__owner = Owner()
 
     def test_create_owner(self):
@@ -35,11 +35,6 @@ class TestOwner(unittest.TestCase):
         self.__owner.firstname = "John"
         self.__owner.lastname = "Doe"
         self.assertEqual(self.__owner.fullname, "John Doe")
-
-    def test_owner_get_uuid(self):
-        uuid = uuid4()
-        owner = Owner(uuid)
-        self.assertTrue(owner.uuid == uuid)
 
     def test_owner_str(self):
         self.__owner.firstname = "John"

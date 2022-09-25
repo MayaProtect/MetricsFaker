@@ -3,8 +3,8 @@ from mf_core import HiveEvent
 
 
 class TestHiveEvent(unittest.TestCase):
-    def __init__(self, methodName: str = ...) -> None:
-        super().__init__(methodName)
+    def __init__(self, method_name: str = ...) -> None:
+        super().__init__(method_name)
         self.__hive_event = HiveEvent("test", 0, "test")
 
     def test_create_event(self):

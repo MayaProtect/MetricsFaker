@@ -4,8 +4,8 @@ from mf_core import Hive
 
 
 class TestHiveFaker(unittest.TestCase):
-    def __init__(self, methodName):
-        super().__init__(methodName)
+    def __init__(self, method_name):
+        super().__init__(method_name)
         self.__hive = Hive()
 
     def test_generate_data(self):
