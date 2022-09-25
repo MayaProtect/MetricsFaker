@@ -34,5 +34,5 @@ class MetricsHistory(list):
     def __getitem__(self, item) -> MetricsHistoryLine:
         return super().__getitem__(item)
 
-    def append(self, __object) -> None:
-        return super().append(__object)
+    def append(self, object) -> None:
+        return super().append(object)
