@@ -56,6 +56,8 @@ spec:
       containers:
         - name: metricsfaker
           image: pfontaine/metricsfaker:{{ commit_sha }}
+          ports:
+            - containerPort: 8000
           env:
             - name: MONGO_HOST
               value: mongodevel
@@ -76,6 +78,6 @@ spec:
   selector:
     app: metricsfaker
   ports:
-  - port: 8080
-    targetPort: 8080
+  - port: 8000
+    targetPort: 8000
   type: ClusterIP
