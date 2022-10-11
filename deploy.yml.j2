@@ -63,7 +63,7 @@ spec:
       containers:
         - name: metricsfaker
           image: pfontaine/metricsfaker:{{ commit_sha }}
-          environment:
+          env:
             - name: MONGO_HOST
               value: mongodevel
             - name: MONGO_PORT
